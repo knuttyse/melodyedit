@@ -2,6 +2,7 @@
     import {onMount} from "svelte";
     import * as Tone from "tone";
     import NoteRow from "./NoteRow.svelte";
+    import {playNotes} from "$lib/synth/play-notes.ts";
 
     let notes = [
         {name: "C#4", duration: "1/4", velocity: 80},
@@ -16,39 +17,12 @@
         synth = new Tone.Synth().toDestination();
     });
 
-    function playNote(name, duration) {
-        synth?.triggerAttackRelease(name, duration);
+    function onClick() {
+        playNotes(synth, notes)
     }
 
-    async function playMelody() {
-        await Tone.start(); // Required to resume audio context in some browsers
-        // Stop and clear the transport
-        Tone.Transport.stop();
-        Tone.Transport.cancel();
 
-        // Start the transport
-        Tone.Transport.start();
-
-        // Define a time variable to schedule notes
-        let time = 0; // Start at 0, and increment based on note durations
-
-        // Iterate through the notes
-        for (const note of notes) {
-            const {name, duration} = note;
-
-            // Convert the duration to seconds
-            const durationInSeconds = Tone.Time(duration).toSeconds();
-
-            // Schedule the note
-            Tone.Transport.schedule(time => {
-                playNote(name, duration);
-            }, time);
-
-            // Increment the time by the duration of the note
-            time += durationInSeconds;
-        }
-    }
 </script>
 
 <NoteRow {notes}/>
-<button on:click={playMelody}>Play</button>
+<button on:click={onClick}>Play</button>
