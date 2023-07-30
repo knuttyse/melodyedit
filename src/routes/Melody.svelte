@@ -3,13 +3,9 @@
     import * as Tone from "tone";
     import NoteRow from "./NoteRow.svelte";
     import {playNotes} from "$lib/synth/play-notes.ts";
+    import {generateNotes} from "$lib/notegenerator/generate.ts";
 
-    let notes = [
-        {name: "C#4", duration: "1/4", velocity: 80},
-        {name: "D4", duration: "1/8", velocity: 60},
-        {name: "E4", duration: "1/2", velocity: 70}
-        // Add more notes as needed
-    ];
+    let notes = generateNotes(8);
 
     let synth = null;
 
