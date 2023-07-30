@@ -1,17 +1,17 @@
 <script>
     import Note from "./Note.svelte";
+
     export let notes = [];
-  </script>
-  
-  <style>
+</script>
+
+<style>
     .note-row {
-      display: flex;
+        display: flex;
     }
-  </style>
-  
-  <div class="note-row">
-    {#each notes as note}
-      <Note {note} />
-    {/each}
-  </div>
-  
+</style>
+
+<div class="note-row">
+  {#each notes as note}
+    <Note name={note.name} duration={note.duration} velocity={note.velocity} />
+  {/each}
+</div>
